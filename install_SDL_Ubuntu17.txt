@@ -26,3 +26,16 @@ Other resources:
 	https://askubuntu.com/questions/344512/what-is-the-general-procedure-to-install-development-libraries-in-ubuntu
 
 
+*** Update 06/05/2018 ***
+SDL_Init(SDL_INIT_VIDEO) failed, 
+SDL_GetError() provides error message: "No available video device"
+
+In the command line, run:
+	sudo apt install xorg-dev
+
+Repeat Step 4. SDL Init succeeded!	
+
+
+
+
+
