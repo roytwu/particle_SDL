@@ -1,7 +1,7 @@
 # first target: all, this targe will compile all the file
 CC = g++
 EXE_NAME = particleExe
-#DEPS = cat.h
+#DEPS = screen.h
 OBJ = main.o 
 
 CFLAGS += -Wall
