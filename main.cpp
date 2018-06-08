@@ -16,10 +16,10 @@ int main(){
 	cout << endl << "SDL Init succeeded!" << endl << endl;
 	
 	// create a 800x600 window
-	const int SCREEN_WIDTH = 800;
-	const int SCREEN_HEIGHT = 600;
+	const int SCRN_WIDTH = 800;  //screen width
+	const int SCRN_HEIGHT = 600; //screen height
 	SDL_Window * window = SDL_CreateWindow("Particle_Fire", 
-		SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT,
+		SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCRN_WIDTH, SCRN_HEIGHT,
 		SDL_WINDOW_SHOWN);
 	
 	if(window == NULL){
@@ -30,7 +30,7 @@ int main(){
 
 	SDL_Renderer * renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_PRESENTVSYNC);
     SDL_Texture * texture =  SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888,
-    	SDL_TEXTUREACCESS_STATIC, SCREEN_WIDTH, SCREEN_HEIGHT);
+    	SDL_TEXTUREACCESS_STATIC, SCRN_WIDTH, SCRN_HEIGHT);
 
     if(renderer == NULL){ 
     	cout << "Could not return renderer" << endl;
@@ -40,12 +40,29 @@ int main(){
     	return 3; 
     }
 
-    Uint32 * buffer = new Uint32[SCREEN_WIDTH * SCREEN_HEIGHT];
+    //allocating memory for all the pixels on the screen, each pixel requires 32 bit
+    Uint32 * ptr_buffer = new Uint32[SCRN_WIDTH * SCRN_HEIGHT];
     
-    //memset(buffer, 255, SCREEN_WIDTH*SCREEN_HEIGHT*sizeof(Uint32));
-    memset(buffer, 0xFF, SCREEN_WIDTH*SCREEN_HEIGHT*sizeof(Uint32));
+    //memset(ptr_buffer, 255, SCREEN_WIDTH*SCREEN_HEIGHT*sizeof(Uint32));
+    memset(ptr_buffer, 0xFF, SCRN_WIDTH*SCRN_HEIGHT*sizeof(Uint32));
 
-    SDL_UpdateTexture(texture, NULL, buffer, SCREEN_WIDTH*sizeof(Uint32));
+    
+    //Creating Test Pattern 
+    const long int hexCode[] = {
+    	0xFFFFFFFF, 0xFFFF00FF, 0x00FFFFFF, 0x00FF00FF,
+    	0xFF00FFFF, 0xFF0000FF, 0x0000FFFF, 0x000000FF
+    };
+
+    for(int k=0; k<8; k++){	
+    	for(int i=(SCRN_WIDTH/8)*k; i<SCRN_WIDTH*SCRN_HEIGHT; i=i+SCRN_WIDTH){
+    		for (int j=0; j<(SCRN_WIDTH/8); j++){		
+    			ptr_buffer[i+j] = hexCode[k];
+    		}
+    	}	
+    }
+
+
+    SDL_UpdateTexture(texture, NULL, ptr_buffer, SCRN_WIDTH*sizeof(Uint32));
     SDL_RenderClear(renderer);
     SDL_RenderCopy(renderer, texture, NULL, NULL);
     SDL_RenderPresent(renderer);
@@ -65,7 +82,7 @@ int main(){
 	}
 
 
-	delete [] buffer;
+	delete [] ptr_buffer;
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyTexture(texture);
 	SDL_DestroyWindow(window);
