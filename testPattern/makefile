@@ -1,8 +1,8 @@
 # first target: all, this targe will compile all the file
 CC = g++
-EXE_NAME = particle_exe
-DEPS = screen.h
-OBJ = main.o screen.o 
+EXE_NAME = testPattern_exe
+#DEPS = screen.h
+OBJ = main.o 
 
 CFLAGS += -Wall
 CFLAGS += -I/usr/local/include/SDL2
@@ -27,6 +27,6 @@ $(EXE_NAME): $(OBJ)
 	$(CC) -o $@ $^ $(LDFLAGS)
 
 clean:
-	rm -rf *.o   # rm: remove command, remove .o 
+	rm -rf *.o  $(EXE_NAME)  # rm: remove command, remove .o and executables
 	clear                    # clear console
 
