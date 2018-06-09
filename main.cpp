@@ -18,7 +18,7 @@ int main(){
 	// create a 800x600 window
 	const int SCRN_WIDTH = 800;  //screen width
 	const int SCRN_HEIGHT = 600; //screen height
-	SDL_Window * window = SDL_CreateWindow("Particle_Fire", 
+	SDL_Window * window = SDL_CreateWindow("test_pattern", 
 		SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCRN_WIDTH, SCRN_HEIGHT,
 		SDL_WINDOW_SHOWN);
 	
@@ -41,13 +41,13 @@ int main(){
     }
 
     //allocating memory for all the pixels on the screen, each pixel requires 32 bit
-    Uint32 * ptr_buffer = new Uint32[SCRN_WIDTH * SCRN_HEIGHT];
+    Uint32 * p_buffer = new Uint32[SCRN_WIDTH * SCRN_HEIGHT];
     
     //memset(ptr_buffer, 255, SCREEN_WIDTH*SCREEN_HEIGHT*sizeof(Uint32));
-    memset(ptr_buffer, 0xFF, SCRN_WIDTH*SCRN_HEIGHT*sizeof(Uint32));
+    memset(p_buffer, 0xFF, SCRN_WIDTH*SCRN_HEIGHT*sizeof(Uint32));
 
     
-    //Creating Test Pattern 
+    //Creating Test Pattern, hex code: 0xRRGGBBAA
     const long int hexCode[] = {
     	0xFFFFFFFF, 0xFFFF00FF, 0x00FFFFFF, 0x00FF00FF,
     	0xFF00FFFF, 0xFF0000FF, 0x0000FFFF, 0x000000FF
@@ -56,13 +56,13 @@ int main(){
     for(int k=0; k<8; k++){	
     	for(int i=(SCRN_WIDTH/8)*k; i<SCRN_WIDTH*SCRN_HEIGHT; i=i+SCRN_WIDTH){
     		for (int j=0; j<(SCRN_WIDTH/8); j++){		
-    			ptr_buffer[i+j] = hexCode[k];
+    			p_buffer[i+j] = hexCode[k];
     		}
     	}	
     }
 
 
-    SDL_UpdateTexture(texture, NULL, ptr_buffer, SCRN_WIDTH*sizeof(Uint32));
+    SDL_UpdateTexture(texture, NULL, p_buffer, SCRN_WIDTH*sizeof(Uint32));
     SDL_RenderClear(renderer);
     SDL_RenderCopy(renderer, texture, NULL, NULL);
     SDL_RenderPresent(renderer);
@@ -82,7 +82,7 @@ int main(){
 	}
 
 
-	delete [] ptr_buffer;
+	delete [] p_buffer;
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyTexture(texture);
 	SDL_DestroyWindow(window);

@@ -1,6 +1,6 @@
 # first target: all, this targe will compile all the file
 CC = g++
-EXE_NAME = particleExe
+EXE_NAME = testPattern_exe
 #DEPS = screen.h
 OBJ = main.o 
 
