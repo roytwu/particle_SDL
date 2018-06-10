@@ -6,7 +6,6 @@ Screen::Screen():
 
 }
 
-
 // bool Screen::init(){
 // 	m_window = NULL;
 
@@ -18,7 +17,6 @@ Screen::Screen():
 // 	m_buffer1 = new Unit32[SCREEN_WIDTH * SCREEN_HEIGHT];
 // 	m_buffer2 = new Unit32[SCREEN_WIDTH * SCREEN_HEIGHT];
 // }
-
 
 bool Screen::init(){
 	//Test to see if SDL work
@@ -49,33 +47,55 @@ bool Screen::init(){
     //allocating memory for all the pixels on the screen, each pixel requires 32 bit
     m_buffer = new Uint32[SCRN_WIDTH * SCRN_HEIGHT];
     
-    //memset(ptr_buffer, 255, SCREEN_WIDTH*SCREEN_HEIGHT*sizeof(Uint32));
+    //memset(ptr_buffer, 255, SCRN_WIDTH*SCRN_HEIGHT*sizeof(Uint32));
     memset(m_buffer, 0xFF, SCRN_WIDTH*SCRN_HEIGHT*sizeof(Uint32));
-
-    
-    //Creating Test Pattern, hex code: 0xRRGGBBAA
-    const long int hexCode[] = {
-    	0xFFFFFFFF, 0xFFFF00FF, 0x00FFFFFF, 0x00FF00FF,
-    	0xFF00FFFF, 0xFF0000FF, 0x0000FFFF, 0x000000FF
-    };
-
-    for(int k=0; k<8; k++){	
-    	for(int i=(SCRN_WIDTH/8)*k; i<SCRN_WIDTH*SCRN_HEIGHT; i=i+SCRN_WIDTH){
-    		for (int j=0; j<(SCRN_WIDTH/8); j++){		
-    			m_buffer[i+j] = hexCode[k];
-    		}
-    	}	
-    }
-
-
-    SDL_UpdateTexture(m_texture, NULL, m_buffer, SCRN_WIDTH*sizeof(Uint32));
-    SDL_RenderClear(m_renderer);
-    SDL_RenderCopy(m_renderer, m_texture, NULL, NULL);
-    SDL_RenderPresent(m_renderer);
-
 
 	return true;
 }
+
+
+Uint32 Screen::setColor(Uint8 red, Uint8 green, Uint8 blue){
+	Uint32 color = 0;
+
+	color += red;
+	color <<= 8;
+
+	color += green;
+	color <<= 8; 
+
+	color += blue;
+	color <<= 8; 
+
+	color += 0xFF;
+	return(color);
+}
+
+
+void Screen::setPixel(int x, int y, Uint8 red, Uint8 green, Uint8 blue){
+	Uint32 color = 0;
+
+	color += red;
+	color <<= 8;
+
+	color += green;
+	color <<= 8; 
+
+	color += blue;
+	color <<= 8; 
+
+	color += 0xFF;
+
+	m_buffer[(y * SCRN_WIDTH) + x] = color;
+}
+
+
+void Screen::update(){
+	SDL_UpdateTexture(m_texture, NULL, m_buffer, SCRN_WIDTH*sizeof(Uint32));
+    SDL_RenderClear(m_renderer);
+    SDL_RenderCopy(m_renderer, m_texture, NULL, NULL);
+    SDL_RenderPresent(m_renderer);
+}
+
 
 bool Screen::processEvent(){
 	SDL_Event event;
@@ -89,28 +109,33 @@ bool Screen::processEvent(){
 }
 
 
-// void Screen::update(){
-// 	SDL_UpdateTexture(m_texture, NULL, m_frontBuffer, SCREEN_WIDTH * sizeof(Uint32));
-// 	SDL_RenderClear(m_renderer);
-// 	SDL_RenderCopy(m_renderer, m_texture, NULL, NULL);
-// 	SDL_RenderPresent(m_renderer);
-// }
-//
-// void Screen::close(){
-// 	delete[] m_buffer1;
-// 	delete[] m_buffer2;
-// 	SDL_DestroyTexture(m_texture);
-// 	SDL_DestroyRenderer(m_renderer);
-// 	SDL_DestroyWindow(m_window);
-// 	SDL_QUit();
-// }
-
 void Screen::close(){
 	delete [] m_buffer;
 	SDL_DestroyRenderer(m_renderer);
 	SDL_DestroyTexture(m_texture);
 	SDL_DestroyWindow(m_window);
 	SDL_Quit();
+}
+
+
+void Screen::testPattern(){
+	const long int hexCode[] = {
+    	setColor(255, 255, 255),  //0xFFFFFFFF
+    	setColor(255, 255, 0),    //0xFFFF00FF
+    	setColor(0, 255, 255),    //0x00FFFFFF
+    	setColor(0, 255, 0),      //0x00FF00FF
+    	setColor(255, 0, 255),    //0xFF00FFFF
+    	setColor(255, 0, 0),      //0xFF0000FF
+    	setColor(0, 0, 255),      //0x0000FFFF
+    	setColor(0, 0, 0),        //0x000000FF  
+    };
+    for(int k=0; k<8; k++){	
+    	for(int i=(SCRN_WIDTH/8)*k; i<SCRN_WIDTH*SCRN_HEIGHT; i=i+SCRN_WIDTH){
+    		for (int j=0; j<(SCRN_WIDTH/8); j++){		
+    			m_buffer[i+j] = hexCode[k];
+    		}
+    	}	
+    }	
 }
 
 } //namespace roy
