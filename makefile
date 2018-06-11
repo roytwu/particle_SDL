@@ -1,8 +1,8 @@
 # first target: all, this targe will compile all the file
 CC = g++
 EXE_NAME = particle_exe
-DEPS = screen.h
-OBJ = main.o screen.o 
+DEPS = screen.h particle.h swarm.h
+OBJ = main.o screen.o particle.o swarm.o
 
 CFLAGS += -Wall
 CFLAGS += -I/usr/local/include/SDL2

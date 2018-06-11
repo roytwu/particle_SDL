@@ -11,6 +11,7 @@ private:
 	SDL_Renderer *m_renderer;
 	SDL_Texture  *m_texture;
 	Uint32       *m_buffer;
+	Uint32 setColor(Uint8 red, Uint8 green, Uint8 blue);
 
 
 	// const static short RED_SHIFT = 24;
@@ -29,8 +30,8 @@ public:
 	void close();
 	
 	void setPixel(int x, int y, Uint8 red, Uint8 green, Uint8 blue);
-	Uint32 setColor(Uint8 red, Uint8 green, Uint8 blue);
-
+	
+	void paintScreenBackground(int blackOrWhite);
 	void testPattern(); //draw test pattern
 };
 

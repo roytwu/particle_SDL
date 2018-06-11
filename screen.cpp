@@ -22,9 +22,8 @@ bool Screen::init(){
 	//Test to see if SDL work
 	if(SDL_Init(SDL_INIT_VIDEO) < 0) {return false;}
 
-	
-	// create a 800x600 window
-	m_window = SDL_CreateWindow("test_pattern", 
+	// create a window
+	m_window = SDL_CreateWindow("particle_movement", 
 		SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCRN_WIDTH, SCRN_HEIGHT,
 		SDL_WINDOW_SHOWN);
 	
@@ -37,7 +36,7 @@ bool Screen::init(){
     m_texture =  SDL_CreateTexture(m_renderer, SDL_PIXELFORMAT_RGBA8888,
     	SDL_TEXTUREACCESS_STATIC, SCRN_WIDTH, SCRN_HEIGHT);
 
-    if(m_renderer == NULL){ 
+    if(m_renderer == NULL || m_texture == NULL){ 
     	SDL_DestroyRenderer(m_renderer);
     	SDL_DestroyWindow(m_window);
     	SDL_Quit();
@@ -48,7 +47,7 @@ bool Screen::init(){
     m_buffer = new Uint32[SCRN_WIDTH * SCRN_HEIGHT];
     
     //memset(ptr_buffer, 255, SCRN_WIDTH*SCRN_HEIGHT*sizeof(Uint32));
-    memset(m_buffer, 0xFF, SCRN_WIDTH*SCRN_HEIGHT*sizeof(Uint32));
+    memset(m_buffer, 0x00, SCRN_WIDTH*SCRN_HEIGHT*sizeof(Uint32));
 
 	return true;
 }
@@ -70,10 +69,17 @@ Uint32 Screen::setColor(Uint8 red, Uint8 green, Uint8 blue){
 	return(color);
 }
 
+void Screen::paintScreenBackground(int blackOrWhite){
+	memset(m_buffer, blackOrWhite, SCRN_WIDTH*SCRN_HEIGHT*sizeof(Uint32));
+}
 
 void Screen::setPixel(int x, int y, Uint8 red, Uint8 green, Uint8 blue){
-	Uint32 color = 0;
+    // don't plot on the edge of the screen
+	if(x<0 || x>=SCRN_WIDTH || y<0 || y>=SCRN_HEIGHT){
+		return;
+	}
 
+	Uint32 color = 0;
 	color += red;
 	color <<= 8;
 
