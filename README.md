@@ -10,7 +10,7 @@ Ubuntu 18.04 LTS
 
 Install SDL2.0 on Ubuntu17 (64bit)
 ----------------------------------
-See Install_SDL_Ubuntu17.txt
+See Install_SDL_Ubuntu17.md
 
 Files:  
 ------
