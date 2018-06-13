@@ -1,11 +1,22 @@
 # particle_SDL
-src folder: source code (.cpp, .h)
+This is a program that generate animaiton of particle movements using SDL.
+  
+     
+Platform:  
+--------
+The program has been tested on:
+Ubuntu 17
+Ubuntu 18.04 LTS
 
+Install SDL2.0 on Ubuntu17 (64bit)
+----------------------------------
+See Install_SDL_Ubuntu17.txt
 
-Other:  
-  Install_SDL_Ubuntu17.txt: Shows the steps to install SDL2.0 in Ubuntu 17 64 bit system    
-  bitshifting.cpp: test program for bitshifting  
-  testPattern folder: demo program with a easy start, creating a test pattern screen using SDL  
-  Makefile_obsolete: outdated makefile
+Files:  
+------
+* src folder: source code (.cpp, .h)
+* bitshifting.cpp: test program for bitshifting  
+* testPattern folder: demo program with a easy start, creating a test pattern screen using SDL  
+* Makefile_obsolete: outdated makefile
 
 
