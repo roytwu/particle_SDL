@@ -29,9 +29,9 @@ cd into the directory created and start SDL installation by runing the following
 
 STEP 5
 ------
-In the makefile:
-	adding header file path: CFLAGS += -I /usr/local/include/SDL2
-	addubg library:          LDFLAGS += -lSDL2    	
+In the makefile:    
+	add header file path: CFLAGS += -I /usr/local/include/SDL2  
+	add library:          LDFLAGS += -lSDL2    	  
 
 Other resources:   
 	http://forum.outpost2.net/index.php?topic=5978.0  
