@@ -1,32 +1,32 @@
 # particle_SDL
-This is a  C++ program that generates animaiton of particle movements using SDL.
+This is a  C++ program that generates animaiton of particle movements using SDL.  
   
      
-Platform:  
+Platform  
 --------
-The program has been tested on:
-Ubuntu 17
-Ubuntu 18.04 LTS
+The program has been tested on:  
+Ubuntu 17  
+Ubuntu 18.04 LTS  
  
  
  
-Prerequisities: Install SDL2.0 
+Prerequisities - Install SDL2.0   
 ------------------------------
 See Install_SDL_Ubuntu17.md
 
-Files:  
+Files  
 ------
-* src folder: source code (.cpp, .h)
-* bitshifting.cpp: test program for bitshifting  
-* testPattern folder: demo program with a easy start, creating a test pattern screen using SDL  
-* Makefile_obsolete: outdated makefile
+* __src__ folder: source code (.cpp, .h)  
+* __bitshifting.cpp__: test program for bitshifting  
+* __testPattern__ folder: demo program with a easy start, creating a test pattern screen using SDL  
+* __Makefile_obsolete__: outdated makefile  
 
-Author
+Author  
 -------
-Roy T Wu
+Roy T Wu  
 
 
-Credits
+Credits  
 -------
-https://caveofprogramming.teachable.com/p/c-beginners
+https://caveofprogramming.teachable.com/p/c-beginners  
 

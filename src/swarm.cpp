@@ -14,4 +14,11 @@ const Particle * const Swarm::getParticle() {
 	return mp_particle; 
 }
 
+void Swarm::update(){
+	for(int i=0; i<Swarm::NUM_PTCL; i++){
+		mp_particle[i].update();
+	}
+}	
+
+
 } //namespace roy

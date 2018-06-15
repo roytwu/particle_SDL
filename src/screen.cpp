@@ -69,9 +69,6 @@ Uint32 Screen::setColor(Uint8 red, Uint8 green, Uint8 blue){
 	return(color);
 }
 
-void Screen::paintScreenBackground(int blackOrWhite){
-	memset(m_buffer, blackOrWhite, SCRN_WIDTH*SCRN_HEIGHT*sizeof(Uint32));
-}
 
 void Screen::setPixel(int x, int y, Uint8 red, Uint8 green, Uint8 blue){
     // don't plot on the edge of the screen
@@ -122,6 +119,13 @@ void Screen::close(){
 	SDL_DestroyWindow(m_window);
 	SDL_Quit();
 }
+
+
+
+void Screen::clear(int zeroTo255){
+	memset(m_buffer, zeroTo255, SCRN_WIDTH*SCRN_HEIGHT*sizeof(Uint32));
+}
+
 
 
 void Screen::testPattern(){

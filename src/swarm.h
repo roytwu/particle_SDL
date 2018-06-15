@@ -16,6 +16,9 @@ public:
 
 	//const Particle * const getParticle() {return mp_particle;}; //in-line declaration
 	const Particle * const getParticle();
+
+	void update();
+	// void clear();
 };
 
 

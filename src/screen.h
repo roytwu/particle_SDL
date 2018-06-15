@@ -19,8 +19,8 @@ private:
 	// const static short BLUE_SHIFT = 8;
 
 public:	
-	const static int SCRN_WIDTH = 800;
-	const static int SCRN_HEIGHT = 600;
+	const static int SCRN_WIDTH = 1204;
+	const static int SCRN_HEIGHT = 768;
 	Screen();
 	//virtual ~Screen();
 
@@ -28,10 +28,12 @@ public:
 	bool processEvent();
 	void update();
 	void close();
+	void clear(int zeroTo255); //clear screen, 0 black, 255 white
+
 	
 	void setPixel(int x, int y, Uint8 red, Uint8 green, Uint8 blue);
 	
-	void paintScreenBackground(int blackOrWhite);
+	
 	void testPattern(); //draw test pattern
 };
 

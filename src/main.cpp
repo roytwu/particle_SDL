@@ -24,23 +24,27 @@ int main(){
 	}
 
 	Swarm swarm_o;
-
 	double max_R = 0, max_G =0; 
+
+
 	while(true)  
 	{
 		int elapased_msec = SDL_GetTicks();     //get milli-seconds
 		double elapased_sec = 0.001*elapased_msec; //in term of second
 		
+		scrn_o.clear(0); //clear the screen
+		swarm_o.update();
+
 		double red = (1+cos(elapased_sec))*(255/2);
 		double green = (1+sin(elapased_sec))*(255/2);
 		if(red>max_R) {max_R = red;}
 		if(green>max_G) {max_G = green;}
 
 
-		if(elapased_sec < 2){
-			scrn_o.testPattern();
-		} else{
-			scrn_o.paintScreenBackground(0); //paint screen with black
+		// if(elapased_sec < 2){
+		// 	scrn_o.testPattern();
+		// } else{
+			// scrn_o.clear(0); //paint screen with black
 
 			const Particle * const p_constPtcl = swarm_o.getParticle();
 			for(int i=0; i<Swarm::NUM_PTCL; i++){
@@ -51,7 +55,8 @@ int main(){
 				scrn_o.setPixel(x, y, red, green, 0);
 			}
 		
-		}
+		// }
+
 		// //Draw the entire screen
 		// for(int y=0; y<Screen::SCRN_HEIGHT; y++){
 		// 	for(int x=0; x<Screen::SCRN_WIDTH; x++){
