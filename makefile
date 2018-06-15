@@ -37,6 +37,6 @@ $(EXE_NAME): $(OBJ)
 	$(CC) -o $@ $^ $(LDFLAGS)
 
 clean:
-	rm -rf $(SRC_DIR)/*.o   # rm: remove command, remove .o 
+	rm -rf $(SRC_DIR)/*.o *.o $(EXE_NAME)   # rm: remove command 
 	clear                    # clear console
 
