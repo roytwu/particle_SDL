@@ -1,5 +1,5 @@
 # particle_SDL
-This is a program that generate animaiton of particle movements using SDL.
+This is a  C++ program that generates animaiton of particle movements using SDL.
   
      
 Platform:  
@@ -7,9 +7,11 @@ Platform:
 The program has been tested on:
 Ubuntu 17
 Ubuntu 18.04 LTS
-
-Install SDL2.0 on Ubuntu17 (64bit)
-----------------------------------
+ 
+ 
+ 
+Prerequisities: Install SDL2.0 
+------------------------------
 See Install_SDL_Ubuntu17.md
 
 Files:  
@@ -19,4 +21,12 @@ Files:
 * testPattern folder: demo program with a easy start, creating a test pattern screen using SDL  
 * Makefile_obsolete: outdated makefile
 
+Author
+-------
+Roy T Wu
+
+
+Credits
+-------
+https://caveofprogramming.teachable.com/p/c-beginners
 
