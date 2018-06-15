@@ -23,7 +23,7 @@ bool Screen::init(){
 	if(SDL_Init(SDL_INIT_VIDEO) < 0) {return false;}
 
 	// create a window
-	m_window = SDL_CreateWindow("explosion", 
+	m_window = SDL_CreateWindow("particle_movement", 
 		SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCRN_WIDTH, SCRN_HEIGHT,
 		SDL_WINDOW_SHOWN);
 	
