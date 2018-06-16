@@ -52,7 +52,9 @@ int main(){
 
 				int x = (ptcl_o.m_x+1) * Screen::SCRN_WIDTH/2;  //0 to scrn width
 				int y = (ptcl_o.m_y+1) * Screen::SCRN_HEIGHT/2; //0 to scrn height
-				scrn_o.setPixel(x, y, red, green, 0);
+				//scrn_o.setPixel(x, y, red, green, 0);
+				scrn_o.setPixel(x, y, 200, 250, 150);
+
 			}
 		
 		// }
