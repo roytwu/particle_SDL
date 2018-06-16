@@ -14,11 +14,12 @@ public:
 	
 	double m_speed;  //polar coordinate
 	double m_direction; //polar coordinate
+
 	
 	Particle();
 	virtual ~Particle();
 
-	void update();
+	void ptcl_update(int interval);
 
 };
 

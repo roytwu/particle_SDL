@@ -33,7 +33,7 @@ int main(){
 		double elapased_sec = 0.001*elapased_msec; //in term of second
 		
 		scrn_o.clear(0); //clear the screen
-		swarm_o.update();
+		swarm_o.swm_update(elapased_msec);
 
 		double red = (1+cos(elapased_sec))*(255/2);
 		double green = (1+sin(elapased_sec))*(255/2);
@@ -41,22 +41,16 @@ int main(){
 		if(green>max_G) {max_G = green;}
 
 
-		// if(elapased_sec < 2){
-		// 	scrn_o.testPattern();
-		// } else{
-			// scrn_o.clear(0); //paint screen with black
+		const Particle * const p_constPtcl = swarm_o.getParticle();
+		for(int i=0; i<Swarm::NUM_PTCL; i++){
+			Particle ptcl_o = p_constPtcl[i];  //ptcl:=particle 
 
-			const Particle * const p_constPtcl = swarm_o.getParticle();
-			for(int i=0; i<Swarm::NUM_PTCL; i++){
-				Particle ptcl_o = p_constPtcl[i];  //ptcl:=particle 
-
-				int x = (ptcl_o.m_x+1) * Screen::SCRN_WIDTH/2;  //0 to scrn width
-				int y = (ptcl_o.m_y+1) * Screen::SCRN_HEIGHT/2; //0 to scrn height
-				scrn_o.setPixel(x, y, red, green, 0);
-			}
+			int x = (ptcl_o.m_x+1) * Screen::SCRN_WIDTH/2;  //0 to scrn width
+			int y = (ptcl_o.m_y) * Screen::SCRN_WIDTH/2 +Screen::SCRN_HEIGHT/2; //0 to scrn height
+			// scrn_o.setPixel(x, y, red, green, 0);
+			scrn_o.setPixel(x, y, 200, 200, 0);
+		}
 		
-		// }
-
 		// //Draw the entire screen
 		// for(int y=0; y<Screen::SCRN_HEIGHT; y++){
 		// 	for(int x=0; x<Screen::SCRN_WIDTH; x++){
