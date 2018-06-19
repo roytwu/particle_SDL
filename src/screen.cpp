@@ -2,7 +2,8 @@
 namespace roy{
 
 Screen::Screen():
-	m_window(NULL), m_renderer(NULL), m_texture(NULL), m_buffer(NULL){
+	m_window(NULL), m_renderer(NULL), m_texture(NULL), 
+	m_buffer1(NULL), m_buffer2(NULL){
 
 }
 
@@ -44,29 +45,90 @@ bool Screen::init(){
     }
 
     //allocating memory for all the pixels on the screen, each pixel requires 32 bit
-    m_buffer = new Uint32[SCRN_WIDTH * SCRN_HEIGHT];
+    m_buffer1 = new Uint32[SCRN_WIDTH * SCRN_HEIGHT];
+    m_buffer2 = new Uint32[SCRN_WIDTH * SCRN_HEIGHT];
     
     //memset(ptr_buffer, 255, SCRN_WIDTH*SCRN_HEIGHT*sizeof(Uint32));
-    memset(m_buffer, 0x00, SCRN_WIDTH*SCRN_HEIGHT*sizeof(Uint32));
+    memset(m_buffer1, 0x00, SCRN_WIDTH*SCRN_HEIGHT*sizeof(Uint32));
+    memset(m_buffer2, 0x00, SCRN_WIDTH*SCRN_HEIGHT*sizeof(Uint32));
 
 	return true;
 }
 
 
-Uint32 Screen::setColor(Uint8 red, Uint8 green, Uint8 blue){
-	Uint32 color = 0;
+bool Screen::processEvent(){
+	SDL_Event event;
+	while(SDL_PollEvent(&event)) //process event queue
+		{
+			if(event.type == SDL_QUIT){ 
+				return false;  //terminate the outer while loop
+			}  
+		}	
+	return true;
+}
 
-	color += red;
-	color <<= 8;
 
-	color += green;
-	color <<= 8; 
+void Screen::update(){
+	SDL_UpdateTexture(m_texture, NULL, m_buffer1, SCRN_WIDTH*sizeof(Uint32));
+    SDL_RenderClear(m_renderer);
+    SDL_RenderCopy(m_renderer, m_texture, NULL, NULL);
+    SDL_RenderPresent(m_renderer);
+}
 
-	color += blue;
-	color <<= 8; 
 
-	color += 0xFF;
-	return(color);
+void Screen::close(){
+	delete [] m_buffer1;
+	delete [] m_buffer2;
+	SDL_DestroyRenderer(m_renderer);
+	SDL_DestroyTexture(m_texture);
+	SDL_DestroyWindow(m_window);
+	SDL_Quit();
+}
+
+
+void Screen::clear(int zeroTo255){
+	memset(m_buffer1, zeroTo255, SCRN_WIDTH*SCRN_HEIGHT*sizeof(Uint32));
+	memset(m_buffer2, zeroTo255, SCRN_WIDTH*SCRN_HEIGHT*sizeof(Uint32));
+}
+
+
+void Screen::boxBlur(){
+	//swap buffers, so pixel info is in buffer2 and we're drawing to buffer11
+	Uint32 *temp = m_buffer1; //store the location where buffer1 is pointing at
+	m_buffer1 = m_buffer2;
+	m_buffer2 = temp;
+
+	for(int y =0; y<SCRN_HEIGHT; y++){
+		for(int x=0; x<SCRN_WIDTH; x++){
+			int redTotal =0;
+			int greenTotal=0; 
+			int blueTotal=0;
+
+			for(int row=-1; row<=1; row++){
+				for(int col=-1; col<1; col++){
+					int currentX = x+col;
+					int currentY = y+row;
+
+					if(currentX>=0 && currentX<SCRN_WIDTH && currentY>=0 && currentY<SCRN_HEIGHT)
+					{
+						Uint32 color = m_buffer2[currentY*SCRN_WIDTH + currentX];
+						Uint8 red = color >> 24;
+						Uint8 green = color >> 16;
+						Uint8 blue = color >> 8;
+						redTotal += red;
+						greenTotal += green;
+						blueTotal += blue;
+					}
+
+				}
+			}
+			Uint8 red = redTotal/9;
+			Uint8 green = greenTotal/9;
+			Uint8 blue = blueTotal/9;
+
+			setPixel(x, y, red, green, blue);
+		}
+	}
 }
 
 
@@ -88,44 +150,25 @@ void Screen::setPixel(int x, int y, Uint8 red, Uint8 green, Uint8 blue){
 
 	color += 0xFF;
 
-	m_buffer[(y * SCRN_WIDTH) + x] = color;
+	m_buffer1[(y * SCRN_WIDTH) + x] = color;
 }
 
 
-void Screen::update(){
-	SDL_UpdateTexture(m_texture, NULL, m_buffer, SCRN_WIDTH*sizeof(Uint32));
-    SDL_RenderClear(m_renderer);
-    SDL_RenderCopy(m_renderer, m_texture, NULL, NULL);
-    SDL_RenderPresent(m_renderer);
+Uint32 Screen::setColor(Uint8 red, Uint8 green, Uint8 blue){
+	Uint32 color = 0;
+
+	color += red;
+	color <<= 8;
+
+	color += green;
+	color <<= 8; 
+
+	color += blue;
+	color <<= 8; 
+
+	color += 0xFF;
+	return(color);
 }
-
-
-bool Screen::processEvent(){
-	SDL_Event event;
-	while(SDL_PollEvent(&event)) //process event queue
-		{
-			if(event.type == SDL_QUIT){ 
-				return false;  //terminate the outer while loop
-			}  
-		}	
-	return true;
-}
-
-
-void Screen::close(){
-	delete [] m_buffer;
-	SDL_DestroyRenderer(m_renderer);
-	SDL_DestroyTexture(m_texture);
-	SDL_DestroyWindow(m_window);
-	SDL_Quit();
-}
-
-
-
-void Screen::clear(int zeroTo255){
-	memset(m_buffer, zeroTo255, SCRN_WIDTH*SCRN_HEIGHT*sizeof(Uint32));
-}
-
 
 
 void Screen::testPattern(){
@@ -142,7 +185,7 @@ void Screen::testPattern(){
     for(int k=0; k<8; k++){	
     	for(int i=(SCRN_WIDTH/8)*k; i<SCRN_WIDTH*SCRN_HEIGHT; i=i+SCRN_WIDTH){
     		for (int j=0; j<(SCRN_WIDTH/8); j++){		
-    			m_buffer[i+j] = hexCode[k];
+    			m_buffer1[i+j] = hexCode[k];
     		}
     	}	
     }	

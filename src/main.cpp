@@ -24,7 +24,7 @@ int main(){
 	}
 
 	Swarm swarm_o;
-	double max_R = 0, max_G =0; 
+	double max_R = 0, max_G =0, max_B=0; 
 
 
 	while(true)  
@@ -32,14 +32,15 @@ int main(){
 		int elapased_msec = SDL_GetTicks();     //get milli-seconds
 		double elapased_sec = 0.001*elapased_msec; //in term of second
 		
-		scrn_o.clear(0); //clear the screen
+		//scrn_o.clear(0); //clear the screen with black 
 		swarm_o.swm_update(elapased_msec);
 
 		double red = (1+cos(elapased_sec))*(255/2);
 		double green = (1+sin(elapased_sec))*(255/2);
+		double blue = (1+sin(elapased_sec))*(255/2);
 		if(red>max_R) {max_R = red;}
 		if(green>max_G) {max_G = green;}
-
+		if(blue>max_B) {max_B = blue;}
 
 		const Particle * const p_constPtcl = swarm_o.getParticle();
 		for(int i=0; i<Swarm::NUM_PTCL; i++){
@@ -47,7 +48,7 @@ int main(){
 
 			int x = (ptcl_o.m_x+1) * Screen::SCRN_WIDTH/2;  //0 to scrn width
 			int y = (ptcl_o.m_y) * Screen::SCRN_WIDTH/2 +Screen::SCRN_HEIGHT/2; //0 to scrn height
-			// scrn_o.setPixel(x, y, red, green, 0);
+			// scrn_o.setPixel(x, y, red, green, blue);
 			scrn_o.setPixel(x, y, 200, 200, 0);
 		}
 		
@@ -58,11 +59,13 @@ int main(){
 		// 	}
 		// }
 
+		scrn_o.boxBlur();
 		scrn_o.update(); //update the screen		
 		if(scrn_o.processEvent() == false){break;} //Check for message/events
 	}
 
-	cout << "Max_RGB: " << max_R << " " << max_G << endl; //RGB value range from 0 to 255
+	//RGB value range from 0 to 255
+	cout << "Max_RGB: " << max_R << " " << max_G << " " << max_B << endl; 
 	scrn_o.close();
 	return 0; 
 }

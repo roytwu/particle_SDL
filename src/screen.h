@@ -10,7 +10,8 @@ private:
 	SDL_Window   *m_window;
 	SDL_Renderer *m_renderer;
 	SDL_Texture  *m_texture;
-	Uint32       *m_buffer;
+	Uint32       *m_buffer1;
+	Uint32       *m_buffer2;
 	Uint32 setColor(Uint8 red, Uint8 green, Uint8 blue);
 
 
@@ -19,8 +20,10 @@ private:
 	// const static short BLUE_SHIFT = 8;
 
 public:	
-	const static int SCRN_WIDTH = 1204;
-	const static int SCRN_HEIGHT = 768;
+	// const static int SCRN_WIDTH = 1204;
+	// const static int SCRN_HEIGHT = 768;
+	const static int SCRN_WIDTH = 800;
+	const static int SCRN_HEIGHT = 600;	
 	Screen();
 	//virtual ~Screen();
 
@@ -32,6 +35,7 @@ public:
 
 	
 	void setPixel(int x, int y, Uint8 red, Uint8 green, Uint8 blue);
+	void boxBlur();
 	
 	
 	void testPattern(); //draw test pattern
