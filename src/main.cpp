@@ -37,7 +37,7 @@ int main(){
 
 		double red = (1+sin(elapased_sec*0.1))*(255/2);
 		double green = (1+sin(elapased_sec*0.2))*(255/2);
-		double blue = (1+cos(elapased_sec*0.5))*(255/2);
+		double blue = (1+cos(elapased_sec*0.1))*(255/2);
 		if(red>max_R) {max_R = red;}
 		if(green>max_G) {max_G = green;}
 		if(blue>max_B) {max_B = blue;}

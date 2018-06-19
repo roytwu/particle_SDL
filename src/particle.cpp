@@ -19,12 +19,17 @@ Particle::Particle(){
 	m_x=0;
 	m_y=0;
 
-	//polar coordinate
-	double spd_gain = 0.0001;
-	m_direction = ( 2* M_PI*rand() )/RAND_MAX; //radian
-	m_speed = (spd_gain*rand())/RAND_MAX;
-	//m_speed *= m_speed; //equal to m_speed = m_speed*m_speed
+	/*polar coordinate*/
+	// double spd_gain = 0.0001;  //orignal parameter
+	// m_speed = (spd_gain*rand())/RAND_MAX;  //original parameter
 
+	/*to use original parameters, comment out the following 3 lines*/
+	double spd_gain = 0.015;                  //gain pair with square m_speed
+	m_speed = (spd_gain*rand())/RAND_MAX;                   //square m_speed
+	m_speed *= m_speed; //equal to m_speed = m_speed*m_speed, square m_speed
+	
+	
+	m_direction = ( 2* M_PI*rand() )/RAND_MAX; //radian
 	m_xspeed = m_speed * cos(m_direction);
 	m_yspeed = m_speed * sin(m_direction);
 }
