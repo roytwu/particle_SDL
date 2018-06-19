@@ -20,10 +20,10 @@ private:
 	// const static short BLUE_SHIFT = 8;
 
 public:	
-	// const static int SCRN_WIDTH = 1204;
-	// const static int SCRN_HEIGHT = 768;
-	const static int SCRN_WIDTH = 800;
-	const static int SCRN_HEIGHT = 600;	
+	const static int SCRN_WIDTH = 1204;
+	const static int SCRN_HEIGHT = 768;
+	// const static int SCRN_WIDTH = 800;
+	// const static int SCRN_HEIGHT = 600;	
 	Screen();
 	//virtual ~Screen();
 

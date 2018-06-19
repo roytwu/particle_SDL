@@ -50,7 +50,7 @@ bool Screen::init(){
     
     //memset(ptr_buffer, 255, SCRN_WIDTH*SCRN_HEIGHT*sizeof(Uint32));
     memset(m_buffer1, 0x00, SCRN_WIDTH*SCRN_HEIGHT*sizeof(Uint32));
-    memset(m_buffer2, 0x00, SCRN_WIDTH*SCRN_HEIGHT*sizeof(Uint32));
+    memset(m_buffer2, 0, SCRN_WIDTH*SCRN_HEIGHT*sizeof(Uint32));
 
 	return true;
 }
@@ -103,12 +103,14 @@ void Screen::boxBlur(){
 			int redTotal =0;
 			int greenTotal=0; 
 			int blueTotal=0;
-
+			
+			// manipulating 3 by 3 grid		
 			for(int row=-1; row<=1; row++){
-				for(int col=-1; col<1; col++){
+				for(int col=-1; col<=1; col++){
 					int currentX = x+col;
 					int currentY = y+row;
 
+					//ignoring pixels at the edge of the screen
 					if(currentX>=0 && currentX<SCRN_WIDTH && currentY>=0 && currentY<SCRN_HEIGHT)
 					{
 						Uint32 color = m_buffer2[currentY*SCRN_WIDTH + currentX];

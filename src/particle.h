@@ -4,14 +4,13 @@ namespace roy{
 
 class Particle{
 private:
+	double m_xspeed;
+	double m_yspeed;
 
 public:	
 	double m_x;
 	double m_y;
 
-	double m_xspeed;
-	double m_yspeed; 
-	
 	double m_speed;  //polar coordinate
 	double m_direction; //polar coordinate
 

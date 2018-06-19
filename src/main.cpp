@@ -35,21 +35,22 @@ int main(){
 		//scrn_o.clear(0); //clear the screen with black 
 		swarm_o.swm_update(elapased_msec);
 
-		double red = (1+cos(elapased_sec))*(255/2);
-		double green = (1+sin(elapased_sec))*(255/2);
-		double blue = (1+sin(elapased_sec))*(255/2);
+		double red = (1+sin(elapased_sec*0.1))*(255/2);
+		double green = (1+sin(elapased_sec*0.2))*(255/2);
+		double blue = (1+cos(elapased_sec*0.5))*(255/2);
 		if(red>max_R) {max_R = red;}
 		if(green>max_G) {max_G = green;}
 		if(blue>max_B) {max_B = blue;}
 
 		const Particle * const p_constPtcl = swarm_o.getParticle();
+
 		for(int i=0; i<Swarm::NUM_PTCL; i++){
 			Particle ptcl_o = p_constPtcl[i];  //ptcl:=particle 
 
 			int x = (ptcl_o.m_x+1) * Screen::SCRN_WIDTH/2;  //0 to scrn width
 			int y = (ptcl_o.m_y) * Screen::SCRN_WIDTH/2 +Screen::SCRN_HEIGHT/2; //0 to scrn height
-			// scrn_o.setPixel(x, y, red, green, blue);
-			scrn_o.setPixel(x, y, 200, 200, 0);
+			scrn_o.setPixel(x, y, red, green, blue);
+			// scrn_o.setPixel(x, y, 200, 200, 0);
 		}
 		
 		// //Draw the entire screen
